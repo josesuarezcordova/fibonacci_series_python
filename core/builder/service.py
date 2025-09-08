@@ -1,35 +1,40 @@
 import random
 import numpy
 import uuid
+import csv
 from datetime import datetime
 
 # Variable to store the time at the start of the process
-str_now  = datetime.now()
+def set_now_variables():
+    str_now  = datetime.now()
+    return str_now
+
+def set_data_file():
+    str_date_time = set_now_variables().strftime("%d%m%y%H%M%S")
+    return str_date_time + "_data.csv"
 
 def get_master_register_file():
-    return("register.csv")
+    return "register.csv"
 
 # create data file as .csv  that store the series of numbers
 # the format of the file name is [date-time]_data.csv
-def set_data_file(str_now):
-    str_date_time = str_now.strftime("%d%m%y%H%M%S")
-    filename = str_date_time+"_data.csv"
-    file = open("../data/" + filename, "w")
-    file.write("uuid,series,status,created_date\n")
-    return filename
+def write_data_file():
+    with open("../data/" + set_data_file(), "w") as file:
+        writer = csv.writer(file)
+        writer.writerow(["uuid","series","status","created_date"])
 
-#set filename
-filename = set_data_file(str_now)
+write_data_file()
+filename = set_data_file()
 
 #Get the time when the process start
-start_time = str_now.strftime("%H:%M:%S")
+def set_start_time():
+    return set_now_variables().strftime("%H:%M:%S")
 
 # Generate a list of random numbers (duplicates allowed)
 def generate_data():
     j = 1
     n = 5
     n_series = 10
-
     # Open file to store series of numbers
     file = open("../data/" + filename, "a")
 
@@ -45,17 +50,18 @@ def generate_data():
     file.close()
 
 #Get the time when the process finished
-end_time = str_now.strftime("%H:%M:%S")
+def set_end_time():
+    return set_now_variables().strftime("%H:%M:%S")
 
 # Update Master File that keep register
 # of new Files generated
-def update_master_register_file(start_time,end_time):
+def update_master_register_file():
     # Set initial status
     file_initial_status = "new"
     #open the master file
     register_file = open(get_master_register_file(), "a")
     #update the master by input new line
-    register_file.write(filename+","+str_now.strftime("%d/%m/%Y")+","+file_initial_status+","+start_time+","+end_time+"\n" )
+    register_file.write(filename+","+set_now_variables().strftime("%d/%m/%Y")+","+file_initial_status+","+set_start_time()+","+set_end_time()+"\n" )
 
 generate_data()
-update_master_register_file(start_time,end_time)
+update_master_register_file()
