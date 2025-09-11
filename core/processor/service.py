@@ -1,9 +1,9 @@
 import os
 import time
-import sort_services as sort_service
+import data_services as data_services
 
-#Open Master Register File
 def open_register_file(file_path):
+    # Open the master file and read the last line
     print("opening master file")
     with open(file_path) as f:
         for line in f:
@@ -12,11 +12,13 @@ def open_register_file(file_path):
 
         string_last_line = last_line.split(",")
         last_file_created = string_last_line[0]
+        print(last_file_created)
 
-        sort_service.sort_array_series(str(last_file_created))
+        data_services.start_validation_series(str(last_file_created))
 
-#Check update Master File
 def detect_master_file_changes(file_path, interval=1):
+    # detect changes in the master file
+    print("detecting changes in the master file")
     last_modified = os.path.getmtime(file_path)
     while True:
         current_modified = os.path.getmtime(file_path)
