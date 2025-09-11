@@ -8,5 +8,6 @@ parts
 src/*.egg-info
 lib
 lib64
-core/data/*.csv
+core/data_raw/*.csv
+core/data_sorted/*.csv
 core/builder/*.csv
