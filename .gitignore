@@ -11,3 +11,7 @@ lib64
 core/data_raw/*.csv
 core/data_sorted/*.csv
 core/builder/*.csv
+.idea/
+.idea/copilot.data.migration.agent.xml
+__pycache__/
+core/processor/__pycache__/

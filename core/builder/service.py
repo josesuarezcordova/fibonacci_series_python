@@ -40,6 +40,8 @@ def generate_data():
     # Open file to store series of numbers
     file = open("../data_raw/" + filename, "a")
 
+    # Generate and write multiple random number series
+    # with unique IDs and timestamps to the data file.
     while j <= n_series:
         now = datetime.now()
         series_created_date = now.strftime("%m/%d/%Y-%H:%M:%S")

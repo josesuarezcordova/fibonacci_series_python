@@ -9,26 +9,28 @@ def open_register_file(file_path):
         for line in f:
             pass
         last_line = line
-
         string_last_line = last_line.split(",")
         last_file_created = string_last_line[0]
         print(last_file_created)
-
+        # Start the validation process for the most recently created data file using its filename.
         data_services.start_validation_series(str(last_file_created))
 
 def detect_master_file_changes(file_path, interval=1):
     # detect changes in the master file
     print("detecting changes in the master file")
     last_modified = os.path.getmtime(file_path)
-    while True:
-        current_modified = os.path.getmtime(file_path)
-        # Confirm the file was modified
-        if current_modified != last_modified:
-            print("File has changed!")
-            last_modified = current_modified
-            # Open the last file created
-            open_register_file(file_path)
-        time.sleep(interval)
+    try:
+        while True:
+            current_modified = os.path.getmtime(file_path)
+            # Confirm the file was modified
+            if current_modified != last_modified:
+                print("File has changed!")
+                last_modified = current_modified
+                # Open the last file created
+                open_register_file(file_path)
+            time.sleep(interval)
+    except KeyboardInterrupt:
+        print("Stopped monitoring.")
 
 #Call the function passing the path of the Master File
 detect_master_file_changes("../builder/register.csv")

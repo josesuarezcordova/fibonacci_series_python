@@ -65,6 +65,8 @@ def start_validation_series(file):
 def update_sorted_file(file_path):
     # Update the sorted file with sorted series
     lines = []
+    # Read the CSV file (skip header), validate and sort the number series in each line,
+    # update the series and status, then store the modified lines for later writing.
     with open(file_path, 'r') as f:
         next(f)
         for line in f:
@@ -74,7 +76,6 @@ def update_sorted_file(file_path):
 
             if check_integrity(numbers):
                 sorted_numbers = sorted(numbers)
-                print(sorted_numbers)
 
                 parts = line.strip().split(',')
                 if len(parts) > 1:
