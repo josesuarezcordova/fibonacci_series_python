@@ -24,15 +24,12 @@ def write_data_file():
         writer = csv.writer(file)
         writer.writerow(["uuid","series","status","created_date"])
 
-write_data_file()
-filename = set_data_file()
-
 def set_start_time():
     # Get the time when the process start
     return set_now_variables().strftime("%H:%M:%S")
 
 # Generate a list of random numbers (duplicates allowed)
-def generate_data():
+def generate_data(filename):
     # Generate series of 5 random numbers between 0 and 10
     j = 1
     n = 5
@@ -53,8 +50,6 @@ def generate_data():
         j += 1
     file.close()
 
-generate_data()
-
 def set_end_time():
     # get the time when the process finished
     return set_now_variables().strftime("%H:%M:%S")
@@ -66,4 +61,8 @@ def update_master_register_file():
     register_file = open(get_master_register_file(), "a")
     register_file.write(filename+","+set_now_variables().strftime("%d/%m/%Y")+","+file_initial_status+","+set_start_time()+","+set_end_time()+"\n" )
 
-update_master_register_file()
+if __name__ == "__main__":
+    write_data_file()
+    filename = set_data_file()
+    generate_data(filename)
+    update_master_register_file()

@@ -15,3 +15,5 @@ core/builder/*.csv
 .idea/copilot.data.migration.agent.xml
 __pycache__/
 core/processor/__pycache__/
+tests/__pycache__/
+tests/data_raw
